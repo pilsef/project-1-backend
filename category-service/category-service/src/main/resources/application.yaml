@@ -3,9 +3,9 @@ spring:
   application:
     name: CATEGORY-SERVICE
   config:
-    import: "optional:configserver:http://localhost:9000"
+    import: "optional:configserver:http://host.docker.internal:9000"
   datasource:
-    url: jdbc:mysql://localhost:3306/categorydb?createDatabaseIfNotExist=true
+    url: jdbc:mysql://host.docker.internal:3306/categorydb?createDatabaseIfNotExist=true
     username: root
     password: admin
     driver-class-name: com.mysql.cj.jdbc.Driver
