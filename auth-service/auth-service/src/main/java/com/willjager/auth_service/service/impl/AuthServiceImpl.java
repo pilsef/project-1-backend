@@ -41,15 +41,11 @@ public class AuthServiceImpl implements AuthService {
     public String login(LoginDto loginDto) {
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginDto.getUsernameOrEmail(),
-                        loginDto.getPassword()
-                )
+                new UsernamePasswordAuthenticationToken(loginDto.getUsernameOrEmail(), loginDto.getPassword())
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtTokenProvider.generateToken(authentication);
-        return token;
+        return jwtTokenProvider.generateToken(authentication);
     }
 
     @Override
@@ -78,6 +74,10 @@ public class AuthServiceImpl implements AuthService {
 
         userRepository.save(user);
 
-        return "Registration Succesful";
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(registerDto.getEmail(), registerDto.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return jwtTokenProvider.generateToken(authentication);
     }
 }
